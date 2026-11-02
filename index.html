@@ -10,8 +10,9 @@
      DOS REEMPLAZOS ANTES DE PUBLICAR
      ====================================================================
        https://github.com/chasqui-ec/chasqui-ec.github.io/releases/latest/download/ChasquiSetup.exe  -> el enlace del instalador en GitHub Releases
-       593982694750  -> su numero con codigo de pais, sin + ni espacios
-                         (ejemplo: 593991234567)
+       593987231961  -> el WhatsApp de ventas (098 723 1961), con codigo de
+                         pais, sin + ni espacios. Aparece 3 veces: los dos
+                         enlaces y la constante WHATSAPP del script del final.
      Busque esas dos palabras en este archivo. Nada mas.
      ==================================================================== -->
 
@@ -292,6 +293,31 @@
     .plan { grid-template-columns: 1fr; gap: 10px; padding: 21px; }
     section { padding-top: 60px; }
   }
+
+  /* ---------- pedir licencia ---------- */
+  .pasos-pedir { margin-top: 26px; display: grid; gap: 14px;
+                 grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .pasos-pedir div { border-top: 2px solid var(--linea); padding-top: 12px;
+                     color: var(--tenue); font-size: 15.5px; }
+  .pasos-pedir b { color: var(--texto); display: block; margin-bottom: 4px; }
+  .pedido { margin-top: 30px; background: var(--panel); border: 1px solid var(--linea);
+            border-radius: 14px; padding: 26px 28px; max-width: 760px; }
+  .pedido .campos { display: grid; gap: 16px 20px;
+                    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .pedido label { display: block; font-size: 14px; font-weight: 600; color: var(--texto); }
+  .pedido label small { display: block; font-weight: 400; color: var(--tenue);
+                        font-size: 12.5px; margin-top: 2px; }
+  .pedido input, .pedido select {
+    width: 100%; margin-top: 7px; font: inherit; font-size: 16px; color: var(--texto);
+    background: var(--fondo); border: 1px solid var(--linea); border-radius: 9px;
+    padding: 11px 13px; }
+  .pedido input:focus, .pedido select:focus { outline: none; border-color: var(--violeta); }
+  .pedido input.mal { border-color: #ef4444; }
+  .pedido .ancho-completo { grid-column: 1 / -1; }
+  .pedido .error { margin-top: 14px; color: #fca5a5; font-size: 14.5px; min-height: 1px; }
+  .pedido .acciones { margin-top: 20px; }
+  .pedido .privado { margin-top: 14px; font-size: 13px; color: var(--tenue); }
+  @media (max-width: 620px) { .pedido { padding: 21px; } }
 </style>
 </head>
 <body>
@@ -311,6 +337,7 @@
       <a href="#reporte">El reporte</a>
       <a href="#precio">Precios</a>
       <a href="#preguntas">Preguntas</a>
+      <a href="#pedir">Pedir licencia</a>
     </nav>
     <a class="boton chico" href="https://github.com/chasqui-ec/chasqui-ec.github.io/releases/latest/download/ChasquiSetup.exe">Descargar</a>
   </div>
@@ -520,7 +547,8 @@
         <div class="cuanto">$30 <small>/ mes</small></div>
       </div>
     </div>
-    <p class="nota-precio">¿Más de 300 al mes? Escríbanos y lo conversamos.</p>
+    <p class="nota-precio">¿Más de 300 al mes? Escríbanos y lo conversamos.
+       <a href="#pedir">Pedir licencia →</a></p>
   </section>
 
   <!-- -------------------------------------------------- preguntas ----- -->
@@ -576,16 +604,57 @@
   </section>
 
   <!-- -------------------------------------------------- cierre -------- -->
-  <div class="cierre">
+  <div class="cierre" id="pedir">
     <h2>Pídanos su licencia</h2>
-    <p>Descargue el programa, escríbanos por WhatsApp y le mandamos su clave.
-       La pega en la ventana de Chasqui y ya está trabajando.</p>
-    <div class="acciones">
-      <a class="boton" href="https://wa.me/593982694750?text=Hola,%20quiero%20la%20licencia%20de%20Chasqui">
-        Escribir por WhatsApp
-      </a>
-      <a class="boton plano" href="https://github.com/chasqui-ec/chasqui-ec.github.io/releases/latest/download/ChasquiSetup.exe">Descargar primero</a>
+    <p>Llene estos datos y se abre WhatsApp con el pedido ya escrito. Le
+       respondemos con la forma de pago y, al confirmarlo, le enviamos su clave.</p>
+
+    <div class="pasos-pedir">
+      <div><b>1. Instale Chasqui</b>Descárguelo e instálelo en el computador
+           donde lo va a usar.</div>
+      <div><b>2. Copie el código del equipo</b>Abra Chasqui: en el recuadro
+           «Licencia» aparece el código de ese computador.</div>
+      <div><b>3. Envíe el pedido</b>Pegue el código aquí abajo, complete lo
+           demás y pulse el botón.</div>
     </div>
+
+    <form class="pedido" id="form-pedido" novalidate>
+      <div class="campos">
+        <label>Su nombre o el de su estudio
+          <input id="p-nombre" autocomplete="name" maxlength="80"
+                 placeholder="Ej.: Estudio Contable Pérez">
+        </label>
+        <label>RUC a nombre de quien va la licencia
+          <small>13 dígitos. Con él le hacemos la factura.</small>
+          <input id="p-ruc" inputmode="numeric" maxlength="13" placeholder="1790000000001">
+        </label>
+        <label class="ancho-completo">Código del equipo
+          <small>Cópielo del recuadro «Licencia» de Chasqui. Cada licencia
+                 sirve para un computador.</small>
+          <input id="p-equipo" autocomplete="off" spellcheck="false" maxlength="40"
+                 placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX">
+        </label>
+        <label>Plan
+          <select id="p-plan">
+            <option value="Hasta 150 comprobantes al mes ($15/mes)">Hasta 150 comprobantes · $15/mes</option>
+            <option value="De 151 a 300 comprobantes al mes ($30/mes)">De 151 a 300 comprobantes · $30/mes</option>
+            <option value="Mas de 300 comprobantes al mes (a conversar)">Más de 300 · a conversar</option>
+          </select>
+        </label>
+        <label>Correo para la factura
+          <small>Opcional.</small>
+          <input id="p-correo" type="email" autocomplete="email" maxlength="80"
+                 placeholder="correo@ejemplo.com">
+        </label>
+      </div>
+      <p class="error" id="p-error" role="alert"></p>
+      <div class="acciones">
+        <button class="boton" type="submit">Pedir por WhatsApp</button>
+        <a class="boton plano" href="https://github.com/chasqui-ec/chasqui-ec.github.io/releases/latest/download/ChasquiSetup.exe">Descargar primero</a>
+      </div>
+      <p class="privado">Estos datos no se guardan en la página: solo arman el
+         mensaje que usted envía por WhatsApp.</p>
+    </form>
   </div>
 
   <footer>
@@ -602,7 +671,7 @@
       </div>
       <div>
         <b>Contacto</b><br>
-        <a href="https://wa.me/593982694750">WhatsApp</a><br>
+        <a href="https://wa.me/593987231961">WhatsApp</a><br>
         <a href="https://github.com/chasqui-ec/chasqui-ec.github.io/releases/latest/download/ChasquiSetup.exe">Descargar Chasqui</a>
       </div>
     </div>
@@ -658,6 +727,61 @@
       foto.style.setProperty("--rx", "0deg");
     });
   }
+})();
+</script>
+<script>
+// El pedido de licencia. No se envia nada a ningun servidor: arma el texto
+// y abre WhatsApp. Lo que se valida es lo que hace falta para emitir la
+// licencia sin tener que volver a preguntar.
+(function () {
+  var WHATSAPP = "593987231961";
+  var form = document.getElementById("form-pedido");
+  if (!form) return;
+  var $ = function (id) { return document.getElementById(id); };
+
+  function marcar(id, mal) { $(id).classList.toggle("mal", mal); }
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var nombre = $("p-nombre").value.trim();
+    var ruc = $("p-ruc").value.replace(/\D/g, "");
+    var crudo = $("p-equipo").value.toUpperCase().replace(/[^0-9A-F]/g, "");
+    var plan = $("p-plan").value;
+    var correo = $("p-correo").value.trim();
+    var errores = [];
+
+    marcar("p-nombre", !nombre);
+    if (!nombre) errores.push("Escriba su nombre o el de su estudio.");
+
+    var rucMal = ruc.length !== 13;
+    marcar("p-ruc", rucMal);
+    if (rucMal) errores.push("El RUC tiene 13 dígitos.");
+
+    var equipoMal = crudo.length !== 24;
+    marcar("p-equipo", equipoMal);
+    if (equipoMal) errores.push("El código del equipo no está completo: cópielo tal como sale en el recuadro «Licencia» de Chasqui.");
+
+    var correoMal = correo && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
+    marcar("p-correo", !!correoMal);
+    if (correoMal) errores.push("Revise el correo.");
+
+    $("p-error").textContent = errores.join(" ");
+    if (errores.length) return;
+
+    var equipo = crudo.match(/.{6}/g).join("-");
+    var texto = [
+      "Hola, quiero la licencia de Chasqui.",
+      "",
+      "Nombre: " + nombre,
+      "RUC: " + ruc,
+      "Codigo del equipo: " + equipo,
+      "Plan: " + plan
+    ];
+    if (correo) texto.push("Correo para la factura: " + correo);
+
+    window.open("https://wa.me/" + WHATSAPP + "?text=" +
+                encodeURIComponent(texto.join("\n")), "_blank", "noopener");
+  });
 })();
 </script>
 </body>
