@@ -612,10 +612,10 @@
     <div class="pasos-pedir">
       <div><b>1. Instale Chasqui</b>Descárguelo e instálelo en el computador
            donde lo va a usar.</div>
-      <div><b>2. Copie el código del equipo</b>Abra Chasqui: en el recuadro
-           «Licencia» aparece el código de ese computador.</div>
-      <div><b>3. Envíe el pedido</b>Pegue el código aquí abajo, complete lo
-           demás y pulse el botón.</div>
+      <div><b>2. Envíe el pedido</b>Complete sus datos aquí abajo y pulse el
+           botón: se abre WhatsApp con el mensaje listo.</div>
+      <div><b>3. Reciba su clave</b>Le indicamos cómo pagar y le pedimos el
+           código que muestra Chasqui en el recuadro «Licencia».</div>
     </div>
 
     <form class="pedido" id="form-pedido" novalidate>
@@ -623,16 +623,6 @@
         <label>Su nombre o el de su estudio
           <input id="p-nombre" autocomplete="name" maxlength="80"
                  placeholder="Ej.: Estudio Contable Pérez">
-        </label>
-        <label>RUC a nombre de quien va la licencia
-          <small>13 dígitos. Con él le hacemos la factura.</small>
-          <input id="p-ruc" inputmode="numeric" maxlength="13" placeholder="1790000000001">
-        </label>
-        <label class="ancho-completo">Código del equipo
-          <small>Cópielo del recuadro «Licencia» de Chasqui. Cada licencia
-                 sirve para un computador.</small>
-          <input id="p-equipo" autocomplete="off" spellcheck="false" maxlength="40"
-                 placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX">
         </label>
         <label>Plan
           <select id="p-plan">
@@ -744,22 +734,12 @@
   form.addEventListener("submit", function (ev) {
     ev.preventDefault();
     var nombre = $("p-nombre").value.trim();
-    var ruc = $("p-ruc").value.replace(/\D/g, "");
-    var crudo = $("p-equipo").value.toUpperCase().replace(/[^0-9A-F]/g, "");
     var plan = $("p-plan").value;
     var correo = $("p-correo").value.trim();
     var errores = [];
 
     marcar("p-nombre", !nombre);
     if (!nombre) errores.push("Escriba su nombre o el de su estudio.");
-
-    var rucMal = ruc.length !== 13;
-    marcar("p-ruc", rucMal);
-    if (rucMal) errores.push("El RUC tiene 13 dígitos.");
-
-    var equipoMal = crudo.length !== 24;
-    marcar("p-equipo", equipoMal);
-    if (equipoMal) errores.push("El código del equipo no está completo: cópielo tal como sale en el recuadro «Licencia» de Chasqui.");
 
     var correoMal = correo && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
     marcar("p-correo", !!correoMal);
@@ -768,13 +748,10 @@
     $("p-error").textContent = errores.join(" ");
     if (errores.length) return;
 
-    var equipo = crudo.match(/.{6}/g).join("-");
     var texto = [
       "Hola, quiero la licencia de Chasqui.",
       "",
       "Nombre: " + nombre,
-      "RUC: " + ruc,
-      "Codigo del equipo: " + equipo,
       "Plan: " + plan
     ];
     if (correo) texto.push("Correo para la factura: " + correo);
